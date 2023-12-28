@@ -1,0 +1,23 @@
+name: 'tes'
+on:
+  push:
+    branches: [main]
+    paths:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t my-image:latest .
+
+      - name: Save Docker image as tar file
+        run: docker save -o my-image.tar my-image:latest
+      - name: Check Connectivity
+        run: |
+          ping 192.168.100.42 22
